@@ -13,13 +13,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
     private static final int SMS_PERMISSIONS_CODE = 1;
     private final int REQUEST_WRITE_CODE = 0;
     private static final String TAG = "MainActivity";
     DatabaseHelper mDatabaseHelper;
     private EditText txtEmail, txtPass;
-    private Button btnLogin, btnSignup;
 
 
     @Override
@@ -27,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkSMSPermission(Manifest.permission.SEND_SMS, SMS_PERMISSIONS_CODE);
-        btnSignup = (Button) findViewById(R.id.btnSignup);
+        Button btnSignup = (Button) findViewById(R.id.btnSignup);
+        Button btnLogin = (Button) findViewById(R.id.btnLogin);
+
         txtEmail = (EditText) findViewById(R.id.userEmail);
         txtPass = (EditText) findViewById(R.id.userPassword);
         mDatabaseHelper = new DatabaseHelper(this);
@@ -36,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 String email = txtEmail.getText().toString();
-                String pwd = txtEmail.getText().toString();
+                String pwd = txtPass.getText().toString();
                 if (txtEmail.length() != 0) {
                     AddData(email, pwd);
                     txtPass.setText("");
@@ -47,18 +50,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                String email = txtEmail.getText().toString();
+                String pwd = txtPass.getText().toString();
+                if (txtEmail.length() != 0) {
+                    checkGivenCredentials(email,pwd);
+                    txtPass.setText("");
+                }
+                else{
+                    toastMessage("You must enter something into the field!");
+                }
+            }
+        });
     }
-
-
-
-
 
     public void checkSMSPermission(String permission, int requestCode) {
         // Checking if permission is not granted
@@ -77,8 +83,21 @@ public class MainActivity extends AppCompatActivity {
             toastMessage("Something went wrong!");
         }
     }
+
+    public void checkGivenCredentials(String email, String pwd){
+        if(Objects.equals(pwd, mDatabaseHelper.getData(email))){
+            toastMessage("Logging In!");
+        }
+        else {
+            toastMessage("Wrong Password...");
+        }
+    }
     private void toastMessage(String message) {
         Toast.makeText(this,message, Toast.LENGTH_SHORT).show();
 
+    }
+
+    private void logMessage(String message){
+        Log.d(TAG, "Message: "+message);
     }
 }

@@ -1,4 +1,5 @@
 package com.example.module6assignment;
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHelper";
     private static final String TABLE_NAME = "people_table";
     private static final String COL1 = "ID";
-    private static final String COL2 = "name";
+    private static final String COL2 = "email";
     private static final String COL3 = "pwd";
 
 
@@ -53,11 +54,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public Cursor getData(){
+    @SuppressLint("Range")
+    public String getData(String email){
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT * FROM " + TABLE_NAME;
+        String query = "SELECT pwd FROM " + TABLE_NAME + " WHERE email = '" + email + "'";
+        Log.d(TAG,"getting "+email+" from list");
         Cursor data = db.rawQuery(query, null);
-        return data;
+        String num = null;
+        if( data != null && data.moveToFirst() ){
+            num = data.getString(data.getColumnIndex("pwd"));
+            Log.d(TAG,"Password: " + num);
+            data.close();
+        }
+        else {
+            Log.d(TAG,"Something went wrong...");
+        }
+        return num;
     }
 
     public boolean deleteData(String id) {
