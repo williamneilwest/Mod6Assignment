@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Module 6 Assignment</string>
+    <string name="password">Password:</string>
+    <string name="email">Email:</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="stockpal_logo">stockpal logo</string>
+</resources>
