@@ -63,7 +63,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String num = null;
         if( data != null && data.moveToFirst() ){
             num = data.getString(data.getColumnIndex("pwd"));
-            Log.d(TAG,"Password: " + num);
             data.close();
         }
         else {

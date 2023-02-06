@@ -5,6 +5,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public void checkGivenCredentials(String email, String pwd){
         if(Objects.equals(pwd, mDatabaseHelper.getData(email))){
             toastMessage("Logging In!");
+            startActivity(new Intent(MainActivity.this, Inventory.class));
         }
         else {
             toastMessage("Wrong Password...");

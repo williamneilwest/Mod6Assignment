@@ -5,4 +5,6 @@
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="stockpal_logo">stockpal logo</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
 </resources>
