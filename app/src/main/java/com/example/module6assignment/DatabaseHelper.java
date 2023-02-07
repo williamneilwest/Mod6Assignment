@@ -104,20 +104,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(TAG,"Something went wrong...");
         }
         Log.d(TAG,"Amount: "+num);
-
         return num;
     }
 
     public boolean addItem(String item){
         SQLiteDatabase db = this.getWritableDatabase();
         String Query = "SELECT amount FROM inventory_table WHERE name = '" + item + "'";
-
         Cursor data = db.rawQuery(Query,null);
         if( data != null && data.moveToFirst() ){
             String Query2 = "UPDATE inventory_table SET amount = amount + 1 WHERE name= '" + item + "'";
             db.execSQL(Query2);
-            int amount = getItemAmount(item) + 1;
-            Log.d(TAG,"Amount: "+amount);
         }
         else {
             ContentValues contentValues = new ContentValues();
