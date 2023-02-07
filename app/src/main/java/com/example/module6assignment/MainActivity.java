@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtEmail = (EditText) findViewById(R.id.userEmail);
         txtPass = (EditText) findViewById(R.id.userPassword);
-        mDatabaseHelper = new DatabaseHelper(this);
+        mDatabaseHelper = new DatabaseHelper(this, "people_table");
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
