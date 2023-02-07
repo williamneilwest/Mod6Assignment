@@ -82,6 +82,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return num;
     }
 
+    public Cursor getListData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT * FROM inventory_table";
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
     public boolean deleteData(String id) {
         SQLiteDatabase db = this.getWritableDatabase();
         int rowsDeleted = db.delete(TABLE_NAME, COL2 + " = ?",
