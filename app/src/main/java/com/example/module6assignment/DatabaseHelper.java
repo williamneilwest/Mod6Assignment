@@ -132,4 +132,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void deleteItem(String item){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String Query = "SELECT amount FROM inventory_table WHERE name = '" + item + "'";
+        Cursor data = db.rawQuery(Query,null);
+        if( data != null && data.moveToFirst() ){
+            String Query2 = "UPDATE inventory_table SET amount = amount - 1 WHERE name= '" + item + "'";
+            db.execSQL(Query2);
+        }
+        else{
+            Log.d(TAG,"Something went wrong or none left...");
+
+        }
+    }
+
 }

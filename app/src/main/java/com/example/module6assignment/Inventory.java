@@ -39,6 +39,19 @@ public class Inventory extends AppCompatActivity {
             }
         });
 
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v){
+                String data = item.getText().toString();
+                if (item.length() != 0) {
+                    mDatabaseHelper.deleteItem(item.getText().toString());
+                    toastMessage(mDatabaseHelper.getItemAmount(item.getText().toString()).toString());
+                }
+                else{
+                    toastMessage("You must enter something into the field!");
+                }
+            }
+        });
 
 
     }
