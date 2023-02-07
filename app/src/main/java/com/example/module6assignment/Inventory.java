@@ -31,6 +31,8 @@ public class Inventory extends AppCompatActivity {
         Button btnDelete = (Button) findViewById(R.id.btnDelete);
         EditText item = (EditText) findViewById(R.id.invItem);
         mDatabaseHelper = new DatabaseHelper(this, "inventory_table");
+        populateListView();
+
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,7 +40,6 @@ public class Inventory extends AppCompatActivity {
                 String data = item.getText().toString();
                 if (item.length() != 0) {
                     mDatabaseHelper.addItem(item.getText().toString());
-                    toastMessage(mDatabaseHelper.getItemAmount(item.getText().toString()).toString());
                     populateListView();
 
                 }
@@ -52,9 +53,13 @@ public class Inventory extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 String data = item.getText().toString();
-                if (item.length() != 0) {
-                    mDatabaseHelper.deleteItem(item.getText().toString());
-                    toastMessage(mDatabaseHelper.getItemAmount(item.getText().toString()).toString());
+                if (data.length() != 0) {
+                    mDatabaseHelper.deleteItem(data);
+                    if(mDatabaseHelper.getItemAmount(data).equals(0)){
+                     mDatabaseHelper.removeItem(data);
+                     Log.d("TAG","Deleting entry...");
+                    }
+                    populateListView();
 
                 }
                 else{
@@ -68,10 +73,9 @@ public class Inventory extends AppCompatActivity {
 
     private void populateListView() {
         Cursor data = mDatabaseHelper.getListData();
-        Log.d("TAG", data.toString());
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()) {
-            String entry = data.getString(1) + "Count: " + mDatabaseHelper.getItemAmount(data.getString(1));
+            String entry = data.getString(1) + " Count: " + mDatabaseHelper.getItemAmount(data.getString(1));
             listData.add(entry);
         }
         Log.d("TAG", listData.toString());

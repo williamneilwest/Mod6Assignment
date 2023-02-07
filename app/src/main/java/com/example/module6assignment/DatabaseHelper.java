@@ -107,10 +107,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             data.close();
         }
         else {
-
             Log.d(TAG,"Something went wrong...");
         }
-        Log.d(TAG,"Amount: "+num);
         return num;
     }
 
@@ -151,6 +149,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(TAG,"Something went wrong or none left...");
 
         }
+    }
+
+    public void removeItem(String item){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(INVENTORY_TABLE,"name=?", new String[]{item});
+
+
     }
 
 }
