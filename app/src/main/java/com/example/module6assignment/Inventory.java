@@ -71,14 +71,14 @@ public class Inventory extends AppCompatActivity {
         Log.d("TAG", data.toString());
         ArrayList<String> listData = new ArrayList<>();
         while (data.moveToNext()) {
-            listData.add(data.getString(1));
+            String entry = data.getString(1) + "Count: " + mDatabaseHelper.getItemAmount(data.getString(1));
+            listData.add(entry);
         }
         Log.d("TAG", listData.toString());
 
         @SuppressLint("ResourceType") ListAdapter adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData);
         listData.sort(String.CASE_INSENSITIVE_ORDER);
         ListView mListView = (ListView) findViewById(R.id.listView);
-
         mListView.setAdapter(adapter);
     }
     private void toastMessage(String message) {

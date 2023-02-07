@@ -85,7 +85,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getListData(){
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM inventory_table";
-        Cursor data = db.rawQuery(query, null);
+        Cursor data = db.rawQuery(query, null,null);
         return data;
     }
 
